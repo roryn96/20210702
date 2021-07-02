@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
+encoding//src/main/java/controller/employee/EmployeeController.java=UTF-8
+encoding//src/main/java/repository/EmployeeRepository.java=UTF-8
 encoding//src/main/resources/message/error.properties=UTF-8

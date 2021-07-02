@@ -33,7 +33,7 @@
 		</td></tr>
 	<tr><td>이름</td>
 		<td>
-			<iform:input path="empName" />
+			<form:input path="empName" />
 			<form:errors path="empName"/>
 		</td></tr>
 	<tr><td>입사일</td>
