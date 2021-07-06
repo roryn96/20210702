@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>Insert title here</title>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -56,63 +57,55 @@
 </script>
 </head>
 <body>
-<form:form action="memJoin" method="post" name="frm" 
-	modelAttribute="memberCommand"> 
+<form action="../memModifyOk" method="post" name="frm"> 
+<input type="text" name="memId" value="${lists[0].memId }" />
 	<table border = 1 align="center">
 		<tr><td>아이디</td>
-			<td><form:input path="memId" />
-				<form:errors path="memId"/>
-			</td></tr>
-		<tr><td>비밀번호</td>
-			<td><form:password path="memPw" />
-			<form:errors path="memPw"/></td></tr>
-		<tr><td>비밀번호 확인</td>
-			<td><form:password path="memPwCon" />
-			<form:errors path="memPwCon"/></td></tr>
+			<td> ${lists[0].memId } </td></tr>
 		<tr><td>이름</td>
-			<td><form:input path="memName" />
-			<form:errors path="memName"/></td></tr>
+			<td> ${lists[0].memName }  </td></tr>
 		<tr><td>우편번호</td>
-			<td><form:input path="postNumber" id="sample4_postcode" readonly="readonly" />
-			<form:errors path="postNumber"/>
-			</td></tr>
+			<td><input type="text" name="postNumber" 
+			id="sample4_postcode" value="${lists[0].postNumber }"></td></tr>
 		<tr><td>주소</td>
-			<td><form:input path="memAddress" id="sample4_roadAddress" 
-			    size="30" readonly="readonly" />
+			<td><input type="text" name="memAddress" 
+				id="sample4_roadAddress" 
+				value="${lists.get(0).memAddress }" size="30">
 				<a href="javascript:sample4_execDaumPostcode();">주소 검색</a>
-			<form:errors path="memAddress"/>
 			</td></tr>
 		<tr><td>상세주소</td>
-			<td><form:input path="detailAdd" />
-			<form:errors path="detailAdd"/></td></tr>
+			<td><input type="text" name="detailAdd" 
+				value="${lists[0].detailAdd }"></td></tr>
 		<tr><td>연락처</td>
-			<td><form:input path="memPhone" />
-			<form:errors path="memPhone"/></td></tr>
-			
+			<td><input type="text" name="memPhone"
+			value="${lists.get(0).memPhone }"></td></tr>
 		<tr><td>이메일</td>
-			<td><form:input path="memEmail" />
-			<form:errors path="memEmail"/></td></tr>
+			<td><input type="text" name="memEmail" 
+			value="${lists[0].memEmail }"></td></tr>
 		<tr><td>생년월일</td>
-			<td><input type="date" name="memBirth" />
-			<form:errors path="memBirth"/>
-			</td></tr>
+			<td><fmt:formatDate value='${lists.get(0).memBirth }' type='date' pattern='yyyy-MM-dd'/></td></tr>
 		<tr><td>성별</td>
-			<td><form:radiobutton path="memGender"  value="M" checked="checked" />남자
-				<form:radiobutton path="memGender" value="F" />여자
-				<form:errors path="memGender"/></td></tr>
+			<td><c:if test="${lists[0].memGender == 'M'}">남자</c:if>
+				<c:if test="${lists[0].memGender == 'F'}">여자</c:if>
+			</td></tr>
 		<tr><td>계좌번호</td>
-			<td><form:input path="memAccount" /></td></tr>
+			<td><input type="text" name="memAccount" 
+								value="${lists[0].memAccount }"></td></tr>
 		<tr><td>이메일 수신여부</td>
-			<td><input type="radio" name="memEmailCk" value="Y" checked />예
-			<input type="radio" name="memEmailCk" value="N" />아니오
-			<form:errors path="memEmailCk"/></td></tr>
+			<td><input type="radio" name="memEmailCk" value="Y"
+				 	<c:if test="${lists[0].memEmailCk == 'Y'}">checked</c:if> 
+				 >예			
+				<input type="radio" name="memEmailCk" value="N" 
+					<c:if test="${lists[0].memEmailCk == 'N'}">checked</c:if> 
+				>아니오</td></tr>
 		<tr><td colspan="2" align="center">
-				<input type="submit" value="가입 완료" />
-				<input type="reset" value="취소" />
-				<input type="button"  value="가입 안함" 
-					onclick="javascript:location.href='main.sm'" />
+				<input type="submit" value="수정 완료" />
+				<input type="button"  value="수정 안함" 
+					onclick="javascript:history.back();" />
+				<input type="button"  value="회원 강퇴" 
+	onclick="javascript:location.href='../memDel?memId=${lists[0].memId }'" />
 			</td></tr>
 	</table>
-</form:form>
+</form>
 </body>
 </html>

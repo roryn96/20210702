@@ -7,10 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="memRegist" method="post">
-	<input type="checkbox" name="agree" >동의<br />
-	<span>${err }</span><br />
-	<input type="submit" value="다음" />
-</form>
+<a href="memDetail">회원정보</a> |
+<a href="memPwChange">비밀번호 변경</a> |
+<a href="memOut">회원탈퇴</a>
 </body>
 </html>

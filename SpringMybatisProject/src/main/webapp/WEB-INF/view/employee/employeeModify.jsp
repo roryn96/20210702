@@ -19,7 +19,8 @@
 	<tr><td>이름</td>
 		<td>${emp.empName}</td></tr>
 	<tr><td>입사일</td>
-		<td><fmt:formatDate value="${emp.hireDate}" type="date" pattern="yyyy-MM-dd" /></td></tr>
+		<td><fmt:formatDate value="${emp.hireDate}" type="date" 
+		pattern="yyyy-MM-dd"/> </td></tr>
 	<tr><td>직무</td>
 		<td>
 		<input type="text" name="jobId" value="${emp.jobId }"/></td></tr>

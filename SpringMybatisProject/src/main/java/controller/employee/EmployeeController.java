@@ -37,7 +37,7 @@ public class EmployeeController {
 	@RequestMapping("empDelete")
 	public String empDelete(
 			@RequestParam(value="empId") String empId) {
-		
+			employeeDeleteService.empDelete(empId);
 		return "redirect:empList";
 	}
 	@RequestMapping(value="empModifyOk", method = RequestMethod.POST)
