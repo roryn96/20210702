@@ -22,4 +22,5 @@
 				class="service.member.MemberPwUpdateService" />
 	<bean id="memberOutService"
 		class="service.member.MemberOutService" />
+	<bean id="memberEmailCkService" class="service.member.MemberEmailCkService" />
 </beans>

@@ -12,6 +12,11 @@ public class MemberRepository {
 	SqlSession sqlSession;	
 	String namespace = "mappers.memberMapper";
 	String statement;
+	public int updateCkOk(MemberDTO dto) { 
+		// update 됐으면 1을 반환, 안됐으면 0을 반환   
+		statement = namespace + ".memDelete";
+		return sqlSession.delete(statement, dto);
+	}                                                                                                                                                                                                            	
 	public void memDelete(String memId) {
 		statement = namespace + ".memDelete";
 		sqlSession.delete(statement, memId);
