@@ -67,10 +67,11 @@ public class GoodsCommand {
 	public void setProdDetail(String prodDetail) {
 		this.prodDetail = prodDetail;
 	}
-	public Multipartfile[] getProdImage1() {
+	public MultipartFile[] getProdImage1() {
 		return prodImage1;
 	}
-	public void setProdImage1(Multipartfile[] prodImage1) {
+	public void setProdImage1(MultipartFile[] prodImage1) {
 		this.prodImage1 = prodImage1;
 	}
+
 }

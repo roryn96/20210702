@@ -1,5 +1,7 @@
 package model;
-
+/// DTO는 DB에 값을 저장하거나, DB로부터 값을 받아오기 위해서 사용 
+/// 그래서 DTO의 속성(=멤버필드)은 DB에 있는 테이블과 같아야 한다. 
+/// DTO에 있는 속성은 테이블의 컬럼과 같아야 한다. 
 public class GoodsDTO {
 	Long prodNum;
 	String prodName;

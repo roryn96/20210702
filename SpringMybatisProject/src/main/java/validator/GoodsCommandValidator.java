@@ -5,7 +5,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public class GoodsCommandValidator implements Validator{
-
 	public boolean supports(Class<?> clazz) {
 		return false;
 	}

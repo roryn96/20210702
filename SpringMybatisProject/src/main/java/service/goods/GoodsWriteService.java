@@ -14,10 +14,13 @@ import model.GoodsDTO;
 import repository.GoodsRepository;
 
 public class GoodsWriteService {
+	// dto가 가지고 있는 값은 repository를 통해 DB에 저장한다.
 	@Autowired
 	GoodsRepository goodsRepository;
-	public void goodsWrite(GoodsCommand goodsCommand,
+	public void goodsInsert(GoodsCommand goodsCommand,
 			HttpSession session) {
+		/// goodsCommand (command 객체)가 가지고 있는 값을 db에 저장하기 위해서는 
+		/// DTO에 저장한다. 
 		GoodsDTO dto = new GoodsDTO();
 		dto.setCtgr(goodsCommand.getCtgr());
 		dto.setProdcapacity(goodsCommand.getProdCapacity());
@@ -28,34 +31,26 @@ public class GoodsWriteService {
 		dto.setProdPrice(goodsCommand.getProdPrice());
 		dto.setPrudSupplyer(goodsCommand.getProdSupplyer());
 		dto.setRecommend(goodsCommand.getRecommend());
-		///employeeID는 로그인 시 session 저장
 		AuthInfoDTO authInfo = 
 				(AuthInfoDTO)session.getAttribute("authInfo");
-		dto.setEmployeeId(authInfo.getGrade());
+		String employeeId = authInfo.getGrade();
+		dto.setEmployeeId(employeeId);
+		//DB에 파일명만 저장하기 위해 Original Filename 을 가져와서 확장자를 추출
 		String prodImage = "";
-		for(MultipartFile mf : goodsCommand.getProdImage1()) {
-			//확장자를 알기 위해서
+		for(MultipartFile mf : goodsCommand.getProdImage1() ) {
 			String original = mf.getOriginalFilename();
-			//original에서 확장자만 추출
-			String originalExt =
-					original.substring(original.lastIndexOf("."));
+			String originalExt = original.substring(original.lastIndexOf("."));
 			String store =
-					UUID.randomUUID().toString().replace("-", "")
-					+ originalExt;
-			// DB에 저장할 파일명을 추출하여 prodImage에 저장
-			prodImage += store + ",";
-			// 파일을 시스템에 저장
-			String filePath = 
-					session.getServletContext().getRealPath(
-							"WEB-INF/view/goods/upload");
-			File file = new File(filePath + "/" +store);
-			// 파일 저장
-			try{mf.transferTo(file);
-			}catch (Exception e) {e.printStackTrace();}
+					UUID.randomUUID().toString().replace("-", "") + originalExt; //확장자
+			prodImage += store + "," ;
+			String realPath = session.getServletContext()
+					.getRealPath("WEB-INF/view/goods/upload");
+			File file = new File(realPath + "/" + store);
+			try {
+				
+			} catch (Exception e) {e.printStackTrace();	}
 		}
 		dto.setProdImage(prodImage);
-		System.out.println(dto.getCtgr());
-		System.out.println(dto.getEmployeeId());
-		goodsRepository.goodsWrite(dto);
+		goodsRepository.goodsInsert(dto);
 	}
 }

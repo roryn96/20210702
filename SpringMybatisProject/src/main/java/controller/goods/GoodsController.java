@@ -13,36 +13,35 @@ import command.GoodsCommand;
 import service.goods.GoodsListService;
 import service.goods.GoodsNumberService;
 import service.goods.GoodsWriteService;
+import validator.GoodsCommandValidator;
 
 @Controller
 @RequestMapping("goods") // 고정값으로 사용
 public class GoodsController {
 	@Autowired
-	GoodsListService goodsListService;
-	@Autowired
 	GoodsNumberService goodsNumberService;
 	@Autowired
 	GoodsWriteService goodsWriteService;
 	@RequestMapping(value="goodsJoin", method=RequestMethod.POST)
-	public String join(GoodsCommand goodsCommand, Errors errors
-			,HttpSession session) {
-		new GoodsCommandValidate().validate(goodsCommand, errors);
+	public String goodsJoin(GoodsCommand goodsCommand, Errors errors,
+			HttpSession session) {
+		new GoodsCommandValidator().validate(goodsCommand, errors);
 		if(errors.hasErrors()) {
 			return "goods/goodsJoin";
 		}
-		goodsWriteService.goodsWrite(goodsCommand,session);
-		return "redirect:goodsList";
+		goodsWriteService.goodsInsert(goodsCommand, session);
+		return "redirect : goodsList";
 	}
+	@RequestMapping("goodsRegist")
+	public String goodsRegist(Model model) {
+		goodsNumberService.goodsNum(model);
+		return "goods/goodsJoin";
+	}
+	@Autowired
+	GoodsListService goodsListService;
 	@RequestMapping("goodsList")
 	public String list(Model model) {
 		goodsListService.goodsList(model);
 		return "goods/goodsList";
 	}
-	@RequestMapping("goodsRegist")
-	public String regist(Model model) {
-		// model : 자바에서 만들어진 값을 jsp에 전달하기 위해서 사용
-		goodsNumberService.goodsNum(model);
-		return "goods/goodsJoin";
-	}
-
 }
