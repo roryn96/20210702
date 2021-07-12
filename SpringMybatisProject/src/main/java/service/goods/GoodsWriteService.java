@@ -27,9 +27,9 @@ public class GoodsWriteService {
 		dto.setProdDelFee(goodsCommand.getProdDelFee());
 		dto.setProdDetail(goodsCommand.getProdDetail());
 		dto.setProdName(goodsCommand.getProdName());
-		dto.setProdNum(goodsCommand.getGoodsNum());
+		dto.setProdNum(goodsCommand.getProdNum());
 		dto.setProdPrice(goodsCommand.getProdPrice());
-		dto.setPrudSupplyer(goodsCommand.getProdSupplyer());
+		dto.setProdSupplyer(goodsCommand.getProdSupplyer());
 		dto.setRecommend(goodsCommand.getRecommend());
 		AuthInfoDTO authInfo = 
 				(AuthInfoDTO)session.getAttribute("authInfo");
@@ -46,9 +46,8 @@ public class GoodsWriteService {
 			String realPath = session.getServletContext()
 					.getRealPath("WEB-INF/view/goods/upload");
 			File file = new File(realPath + "/" + store);
-			try {
-				
-			} catch (Exception e) {e.printStackTrace();	}
+			try {mf.transferTo(file);} 
+			catch (Exception e) {e.printStackTrace();}
 		}
 		dto.setProdImage(prodImage);
 		goodsRepository.goodsInsert(dto);

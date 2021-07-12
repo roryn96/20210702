@@ -2,17 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.goodsMapper">
+<update id="goodsUpdate" parameterType="model.GoodsDTO">
+	update products
+	set PROD_PRICE = #{prodPrice}, PROD_DETAIL = #{prodDetail},
+		PROD_CAPACITY = #{prodCapacity},PRUD_SUPPLYER=#{prodSupplyer},
+		PROD_DEL_FEE = #{prodDelFee}, RECOMMEND =#{recommend},
+		CTGR = #{ctgr}
+	where PROD_NUM = #{prodNum}
+</update>
 <select id="goodsNum" resultType="string">
 	select prod_seq.nextval from dual
 </select>
-<select id="goodsList" resultType="gd">
-	select PROD_NUM prodNum, PROD_NAME prodName, PROD_PRICE prodPrice,
-	PROD_IMAGE prodImage, PROD_DETAIL prodDetail, PROD_CAPACITY prodCapacity, 
-	PRUD_SUPPLYER prudSupplyer, PROD_DEL_FEE prodDelFee,
-	RECOMMEND recommend, EMPLOYEE_ID employeeId, CTGR ctgr
+<!-- id는 primary key -->
+<!-- result는 일반 컬럼 -->
+<resultMap type="model.GoodsDTO" id="baseResult">
+	<id column="PROD_NUM" jdbcType="BIGINT" property="prodNum" />
+	<result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
+	<result column="PROD_PRICE" jdbcType="BIGINT" property="prodPrice"/>
+	<result column="PROD_IMAGE" jdbcType="VARCHAR" property="prodImage"/>
+	<result column="PROD_DETAIL" jdbcType="VARCHAR" property="prodDetail"/>
+	<result column="PROD_CAPACITY" jdbcType="VARCHAR" property="prodCapacity"/>
+	<result column="PROD_SUPPLYER" jdbcType="VARCHAR" property="prodSupplyer"/>
+	<result column="PROD_DEL_FEE" jdbcType="BIGINT" property="prodDelFee"/>
+	<result column="RECOMMEND" jdbcType="VARCHAR" property="recommend"/>
+	<result column="EMPLOYEE_ID" jdbcType="VARCHAR" property="employeeId"/>
+	<result column="CTGR" jdbcType="VARCHAR" property="ctgr"/>					
+</resultMap>
+<select id = "goodsDetail" parameterType="string"
+resultMap="baseResult">
+	select PROD_NUM, PROD_NAME, PROD_PRICE,
+	PROD_IMAGE, PROD_DETAIL, PROD_CAPACITY, 
+	PRUD_SUPPLYER, PROD_DEL_FEE,
+	RECOMMEND, EMPLOYEE_ID, CTGR
 	from products
 </select>
-<insert id="goodsInsert" parameterType = "gd">
+
+<insert id="goodsInsert" parameterType = "model.GoodsDTO">
 	insert into products(PROD_NUM, PROD_NAME, PROD_PRICE,
 	PROD_DETAIL, PROD_CAPACITY, PRUD_SUPPLYER, PROD_DEL_FEE,
 	RECOMMEND, EMPLOYEE_ID, CTGR, PROD_IMAGE)
@@ -20,4 +45,11 @@
 	#{prodDetail},#{prodCapacity},#{prudSupplyer},#{prodDelFee},
 	#{recommend},#{employeeId},#{ctgr},#{prodImage)	
 </insert>
+<select id="goodsList" resultType="model.GoodsDTO">
+	select PROD_NUM prodNum, PROD_NAME prodName, PROD_PRICE prodPrice,
+	PROD_IMAGE prodImage, PROD_DETAIL prodDetail, PROD_CAPACITY prodCapacity, 
+	PRUD_SUPPLYER prudSupplyer, PROD_DEL_FEE prodDelFee,
+	RECOMMEND recommend, EMPLOYEE_ID employeeId, CTGR ctgr
+	from products
+</select>
 </mapper>

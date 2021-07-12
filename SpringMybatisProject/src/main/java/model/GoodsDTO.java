@@ -9,7 +9,7 @@ public class GoodsDTO {
 	String prodImage;
 	String prodDetail;
 	String prodcapacity;
-	String prudSupplyer;
+	String prodSupplyer;
 	Long prodDelFee;
 	String recommend;
 	String employeeId;
@@ -50,11 +50,11 @@ public class GoodsDTO {
 	public void setProdcapacity(String prodcapacity) {
 		this.prodcapacity = prodcapacity;
 	}
-	public String getPrudSupplyer() {
-		return prudSupplyer;
+	public String getProdSupplyer() {
+		return prodSupplyer;
 	}
-	public void setPrudSupplyer(String prudSupplyer) {
-		this.prudSupplyer = prudSupplyer;
+	public void setProdSupplyer(String prodSupplyer) {
+		this.prodSupplyer = prodSupplyer;
 	}
 	public Long getProdDelFee() {
 		return prodDelFee;

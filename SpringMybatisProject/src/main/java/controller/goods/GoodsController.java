@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import command.GoodsCommand;
+import service.goods.GoodsDetailService;
 import service.goods.GoodsListService;
 import service.goods.GoodsNumberService;
+import service.goods.GoodsUpdateService;
 import service.goods.GoodsWriteService;
 import validator.GoodsCommandValidator;
 
@@ -22,7 +24,34 @@ public class GoodsController {
 	GoodsNumberService goodsNumberService;
 	@Autowired
 	GoodsWriteService goodsWriteService;
-	@RequestMapping(value="goodsJoin", method=RequestMethod.POST)
+	@Autowired
+	GoodsDetailService goodsDetailService;
+	@Autowired
+	GoodsUpdateService goodsUpdateService;
+	@RequestMapping("goodsUpdate")
+	public String goodsUpdate(GoodsCommand goodsCommand, Errors errors) {
+		new GoodsCommandValidator().validate(goodsCommand, errors);
+		if(errors.hasErrors()) {
+			return "goods/goodsModify";
+		}
+		goodsUpdateService.goodsUpdate(goodsCommand);
+		return "redirect/goods/goodsList";
+	}
+	@RequestMapping("prodModify")
+	public String prodModify(
+			@RequestParam(value="prodNum") String prodNum,
+			Model model) {
+		goodsDetailService.goodsDetail(prodNum, model);
+		return "goods/goodsModify";
+	}
+	@RequestMapping("prodDetail")
+	public String prodDetail(
+			@RequestParam (value="prodNum") String prodNum,
+			Model model) {
+		goodsDetailService.goodsDetail(prodNum, model);
+		return "goods/goodsDetail";
+	}
+	@RequestMapping(value="goodsJoin")
 	public String goodsJoin(GoodsCommand goodsCommand, Errors errors,
 			HttpSession session) {
 		new GoodsCommandValidator().validate(goodsCommand, errors);

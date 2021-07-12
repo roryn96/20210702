@@ -10,4 +10,6 @@
 	<bean class="service.goods.GoodsListService" />
 	<bean class="service.goods.GoodsNumberService" />
 	<bean class="service.goods.GoodsWriteService" />
+	<bean class="service.goods.GoodsDetailService" />
+	<bean class="service.goods.GoodsUpdateService" />
 </beans>
