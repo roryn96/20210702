@@ -37,19 +37,21 @@ public class GoodsWriteService {
 		dto.setEmployeeId(employeeId);
 		//DB에 파일명만 저장하기 위해 Original Filename 을 가져와서 확장자를 추출
 		String prodImage = "";
-		for(MultipartFile mf : goodsCommand.getProdImage1() ) {
-			String original = mf.getOriginalFilename();
-			String originalExt = original.substring(original.lastIndexOf("."));
-			String store =
-					UUID.randomUUID().toString().replace("-", "") + originalExt; //확장자
-			prodImage += store + "," ;
-			String realPath = session.getServletContext()
-					.getRealPath("WEB-INF/view/goods/upload");
-			File file = new File(realPath + "/" + store);
-			try {mf.transferTo(file);} 
-			catch (Exception e) {e.printStackTrace();}
+		if(goodsCommand.getProdImage()[0].getOriginalFilename().equals("")) {
+			for(MultipartFile mf : goodsCommand.getProdImage()) {
+				String original = mf.getOriginalFilename();
+				String originalExt = original.substring(original.lastIndexOf("."));
+				String store =
+						UUID.randomUUID().toString().replace("-", "") + originalExt; //확장자
+				prodImage += store + "," ;
+				String realPath = session.getServletContext()
+						.getRealPath("WEB-INF/view/goods/upload");
+				File file = new File(realPath + "/" + store);
+				try {mf.transferTo(file);} 
+				catch (Exception e) {e.printStackTrace();}
+			}
+			dto.setProdImage(prodImage);
 		}
-		dto.setProdImage(prodImage);
 		goodsRepository.goodsInsert(dto);
 	}
 }

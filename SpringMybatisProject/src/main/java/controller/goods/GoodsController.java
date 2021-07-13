@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import command.GoodsCommand;
+import service.goods.GoodsDeleteService;
 import service.goods.GoodsDetailService;
 import service.goods.GoodsListService;
 import service.goods.GoodsNumberService;
@@ -28,13 +29,23 @@ public class GoodsController {
 	GoodsDetailService goodsDetailService;
 	@Autowired
 	GoodsUpdateService goodsUpdateService;
+	@Autowired
+	GoodsDeleteService goodsDeleteService;
+	@RequestMapping("goodsDel")
+	public String goodsDel(
+			@RequestParam(value="prodNum")String prodNum, HttpSession session) {
+		goodsDeleteService.goodsDel(prodNum, session); 
+		// 여기 있는 goodsDel은 service에 있는 메소드를 불러서 사용하겠다는 뜻. 
+		// 함부로 내가 원하는 형태로 바꾸면 안된다. 
+		return "redirect:goodsList";
+	}
 	@RequestMapping("goodsUpdate")
-	public String goodsUpdate(GoodsCommand goodsCommand, Errors errors) {
+	public String goodsUpdate(GoodsCommand goodsCommand, Errors errors, HttpSession session) {
 		new GoodsCommandValidator().validate(goodsCommand, errors);
 		if(errors.hasErrors()) {
 			return "goods/goodsModify";
 		}
-		goodsUpdateService.goodsUpdate(goodsCommand);
+		goodsUpdateService.goodsUpdate(goodsCommand, session);
 		return "redirect/goods/goodsList";
 	}
 	@RequestMapping("prodModify")

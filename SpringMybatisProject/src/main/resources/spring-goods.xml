@@ -12,4 +12,5 @@
 	<bean class="service.goods.GoodsWriteService" />
 	<bean class="service.goods.GoodsDetailService" />
 	<bean class="service.goods.GoodsUpdateService" />
+	<bean class="service.goods.GoodsDeleteService" />
 </beans>
