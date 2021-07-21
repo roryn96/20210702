@@ -10,11 +10,16 @@ import model.MemberDTO;
 public class MemberRepository {
 	@Autowired
 	SqlSession sqlSession;	
+	
 	String namespace = "mappers.memberMapper";
 	String statement;
+	public String idFind(MemberDTO dto) {
+		statement = namespace + "idFind";
+		return sqlSession.selectOne(statement,dto);
+	}
 	public int updateCkOk(MemberDTO dto) { 
 		// update 됐으면 1을 반환, 안됐으면 0을 반환   
-		statement = namespace + ".memDelete";
+		statement = namespace + ".updateCkOk";
 		return sqlSession.delete(statement, dto);
 	}                                                                                                                                                                                                            	
 	public void memDelete(String memId) {
@@ -37,9 +42,13 @@ public class MemberRepository {
 		statement = namespace + ".memUpdate";
 		sqlSession.update(statement, dto);
 	}
-	public List<MemberDTO> memList(String memId){
+	public Integer getMemberCount() {
+		statement = namespace + ".getMemberCount";
+		return sqlSession.selectOne(statement);
+	}
+	public List<MemberDTO> memList(MemberDTO dto){
 		statement = namespace + ".memList";
-		return sqlSession.selectList(statement, memId);
+		return sqlSession.selectList(statement, dto);
 	}
 	public void memJoin(MemberDTO dto) {
 		statement = namespace + ".memJoin";

@@ -80,7 +80,9 @@ public class GoodsController {
 	@Autowired
 	GoodsListService goodsListService;
 	@RequestMapping("goodsList")
-	public String list(Model model) {
+	public String list(
+			@RequestParam(value ="page", defaultValue = "1") Integer page,
+			Model model) {
 		goodsListService.goodsList(model);
 		return "goods/goodsList";
 	}
